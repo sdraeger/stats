@@ -81,6 +81,7 @@ public class PopupWindow: NSWindow, NSWindowDelegate {
     private let viewController: PopupViewController
     internal var locked: Bool = false
     internal var openedBy: widget_t? = nil
+    internal var closedAt: Date = .distantPast
     
     public init(title: String, module: ModuleType, view: Popup_p?, visibilityCallback: @escaping (_ state: Bool) -> Void) {
         self.viewController = PopupViewController(module: module)
@@ -126,6 +127,7 @@ public class PopupWindow: NSWindow, NSWindowDelegate {
         }
         
         self.viewController.setCloseButton(false)
+        self.closedAt = Date()
         self.setIsVisible(false)
     }
 }

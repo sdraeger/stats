@@ -328,7 +328,9 @@ open class Module {
             popup.openedBy = widget
         }
         
-        if popup.occlusionState.rawValue == 8192 || reopen {
+        // a click on the menu bar item resigns key before this runs, so the popup was just closed by that same click
+        let closedByThisClick = Date().timeIntervalSince(popup.closedAt) < 0.3
+        if (popup.occlusionState.rawValue == 8192 && !closedByThisClick) || reopen {
             NSApplication.shared.activate(ignoringOtherApps: true)
             
             popup.contentView?.invalidateIntrinsicContentSize()
